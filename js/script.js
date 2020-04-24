@@ -100,36 +100,61 @@ function generateTitleLinks() {
   }
 }
 
+generateTitleLinks();
+
 // ***              ***
 // GENERATE TAGS
 // ***              ***
 
-generateTitleLinks();
+function generateTags() {
+  /* [DONE] find all articles */
 
-function generateTags(){
-  /* find all articles */
+  const articles = document.querySelectorAll(optArticleSelector);
 
-  /* START LOOP: for every article: */
+  /* [DONE] START LOOP: for every article: */
 
-    /* find tags wrapper */
+  for (let article of articles) {
+
+    /* [DONE] find tags wrapper */
+
+    const tags = article.querySelector(optArticleTagsSelector);
 
     /* make html variable with empty string */
 
-    /* get tags from data-tags attribute */
+    let html = '';
 
-    /* split tags into array */
+    /* [DONE] get tags from data-tags attribute */
 
-    /* START LOOP: for each tag */
+    const articleTags = article.getAttribute('data-tags');
+    console.log('data-tags attribute get from the article: ' + articleTags);
 
-      /* generate HTML of the link */
+    /* [DONE] split tags into array */
 
-      /* add generated code to html variable */
+    const articleTagsArray = articleTags.split(' ');
+    console.log(articleTagsArray);
 
-    /* END LOOP: for each tag */
+    /* [DONE] START LOOP: for each tag */
+    for(let tag of articleTagsArray){
+      console.log(tag);
+      
+      /* [DONE] generate HTML of the link */
 
-    /* insert HTML of all the links into the tags wrapper */
+      const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+      console.log(linkHTML);
 
-  /* END LOOP: for every article: */
+      /* [DONE] add generated code to html variable */
+
+      html = html + linkHTML;        
+
+    /* [DONE] END LOOP: for each tag */
+    }
+
+    /* [DONE] insert HTML of all the links into the tags wrapper */
+
+    tags.innerHTML = html;
+
+  /* [DONE] END LOOP: for every article: */
+  }
 }
 
 generateTags();
