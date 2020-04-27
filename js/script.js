@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 
 const optArticleSelector = '.post',
@@ -158,3 +159,89 @@ function generateTags() {
 }
 
 generateTags();
+
+// ***              ***
+// TAG CLICKED ACTION
+// ***              ***
+
+function tagClickHandler(event){
+
+  /* [DONE] prevent default action for this event */
+
+  event.preventDefault();
+
+  /* [DONE] make new constant named "clickedElement" and give it the value of "this" */
+
+  const clickedElement = this;
+  console.log('Tag was clicked!');
+
+  /* [DONE] make a new constant "href" and read the attribute "href" of the clicked element */
+
+  const href = clickedElement.getAttribute('href');
+  console.log('Href attribute get from the clicked tag: ' + href);
+
+  /* [DONE] make a new constant "tag" and extract tag from the "href" constant */
+
+  const tag = href.replace('#tag-', '');
+  console.log(tag);
+
+  /* [DONE] find all tag links with class active */
+
+  const activeTags = document.querySelectorAll('a.active[href^="#tag-"]');
+
+  /* [DONE] START LOOP: for each active tag link */
+
+  for (let activeTag of activeTags) {
+
+    /* [DONE] remove class active */
+
+    activeTag.classList.remove('active');
+  
+    /* [DONE] END LOOP: for each active tag link */
+
+  }
+
+  /* [DONE] find all tag links with "href" attribute equal to the "href" constant */
+
+  const targetTags = document.querySelector('a[href="' + href + '"]');
+
+  /* [DONE] START LOOP: for each found tag link */
+
+  for (let targetTag of targetTags) {
+
+    /* [DONE] add class active */
+
+    targetTag.classList.add('active');
+    console.log('Target Tag: ' + targetTag);
+
+    /* [DONE] END LOOP: for each found tag link */
+
+  }
+
+  /* [DONE] execute function "generateTitleLinks" with article selector as argument */
+
+  generateTitleLinks('[data-tags~="' + tag + '"]');
+  console.log(generateTitleLinks);
+}
+
+function addClickListenersToTags(){
+
+  /* [DONE] find all links to tags */
+
+  const tagLinks = document.querySelectorAll('.list-horizontal a');
+  console.log(tagLinks);
+
+  /* [DONE] START LOOP: for each link */
+
+  for (let tagLink of tagLinks) {
+
+    /* [DONE] add tagClickHandler as event listener for that link */
+
+    tagLink.addEventListener('click', tagClickHandler);
+
+    /* [DONE] END LOOP: for each link */
+
+  }
+}
+
+addClickListenersToTags();
