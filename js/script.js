@@ -4,7 +4,10 @@ const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags .list',
-  optTagsListSelector = '.tags.list';
+  optTagsListSelector = '.tags.list',
+  optCloudClassCount = '5',
+  optCloudClassPrefix = 'tag-size-';
+
 
 // ***              ***
 // TITLE CLICK HANDLER
@@ -107,6 +110,47 @@ function generateTitleLinks(customSelector = '') {
 generateTitleLinks();
 
 // ***              ***
+// CALCULATE TAGS PARAMS - Calculate amount of tags - for TAG CLOUD
+// ***              ***
+
+function calculateTagsParams(tags) {
+
+  /* [DONE] create a new const params with an object with 2 keys - max = 0, min = 999999 */
+
+  const params = {max : '0', min : '999999'};
+
+  /* [DONE] START LOOP: for every tag */
+
+  for(let tag in tags){
+
+    /* [DONE] set value of params.max and params.min */
+
+    if(tags[tag] > params.max){
+      params.max = tags[tag];
+    }else if(tags[tag] < params.min){
+      params.min = tags[tag];
+    }    
+    console.log('Tag: "' + tag + '" is used ' + tags[tag] + ' times');
+
+    /* [DONE] END LOOP: for every tag */
+  }
+
+  return params;
+}
+
+// ***              ***
+// CALCULATE TAG CLASS
+// ***              ***
+
+function calculateTagClass(count, params){
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );  
+  return optCloudClassPrefix + classNumber;
+}
+
+// ***              ***
 // GENERATE TAGS
 // ***              ***
 
@@ -182,6 +226,11 @@ function generateTags() {
 
   const tagList = document.querySelector('.tags');
   
+  /* [NEW] TAG CLOUD */
+
+  const tagsParams = calculateTagsParams(allTags);
+  console.log('"tagsParams": ', tagsParams);
+
   /* [NEW] create variable for all links HTML code */
 
   let allTagsHTML = '';
@@ -192,7 +241,7 @@ function generateTags() {
     
     /* [NEW] generate code of a link and add it to allTagsHTML */
 
-    allTagsHTML += '<li><a href="#tag-' + tag + '">' + tag + ' (' + allTags[tag] + ')' + '</a></li>';
+    allTagsHTML += '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + ' (' + allTags[tag] + ')' + '</a></li>';
 
   /* [NEW] END LOOP: for each tag in allTags */
   }
