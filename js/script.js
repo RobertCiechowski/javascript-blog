@@ -202,7 +202,8 @@ function generateTags() {
       
       /* [NEW] check if this link is NOT already in allTags */
 
-      if(!allTags.hasOwnProperty(tag)){
+      //  if(!allTags.hasOwnProperty(tag)){ **** Błąd w instrukcji? 6.3 Dodawanie nowych tagów do obiektu
+      if(!Object.prototype.hasOwnProperty.call(allTags, tag)){
 
         /* [NEW] add tag to allTags object */
 
@@ -224,8 +225,9 @@ function generateTags() {
 
   /* [NEW] find list of tags in right column */
 
-  const tagList = document.querySelector('.tags');
-  
+  //const tagList = document.querySelector('.tags');
+  const tagList = document.querySelector(optTagsListSelector);
+    
   /* [NEW] TAG CLOUD */
 
   const tagsParams = calculateTagsParams(allTags);
@@ -241,7 +243,7 @@ function generateTags() {
     
     /* [NEW] generate code of a link and add it to allTagsHTML */
 
-    allTagsHTML += '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + ' (' + allTags[tag] + ')' + '</a></li>';
+    allTagsHTML += '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '</a></li>';
 
   /* [NEW] END LOOP: for each tag in allTags */
   }

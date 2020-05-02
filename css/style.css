@@ -32,6 +32,10 @@ body {
   color: #777777;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* Layout */
 .wrapper {
   display: -ms-flexbox;
@@ -110,5 +114,35 @@ body {
 
 .list-horizontal li {
   margin-right: 5px;
+}
+
+/* Sidebar */
+ul[class="list tags"] {
+  display: inline;
+}
+
+.tag-size-1 {
+  font-size: 15px;
+  color: red;
+}
+
+.tag-size-2 {
+  font-size: 18px;
+  color: green;
+}
+
+.tag-size-3 {
+  font-size: 21px;
+  color: teal;
+}
+
+.tag-size-4 {
+  font-size: 24px;
+  color: palegreen;
+}
+
+.tag-size-5 {
+  font-size: 27px;
+  color: black;
 }
 /*# sourceMappingURL=style.css.map */
