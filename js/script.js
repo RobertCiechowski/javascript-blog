@@ -4,9 +4,11 @@ const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags .list',
+  optArticleAuthorsSelector = 'post-author',
   optTagsListSelector = '.tags.list',
   optCloudClassCount = '5',
-  optCloudClassPrefix = 'tag-size-';
+  optCloudClassPrefix = 'tag-size-',
+  optAuthorsListSelector = '.authors.list';
 
 
 // ***              ***
@@ -172,7 +174,7 @@ function generateTags() {
 
     const tags = article.querySelector(optArticleTagsSelector);
 
-    /* make html variable with empty string */
+    /* [DONE] make html variable with empty string */
 
     let html = '';
 
@@ -202,7 +204,6 @@ function generateTags() {
       
       /* [NEW] check if this link is NOT already in allTags */
 
-      //  if(!allTags.hasOwnProperty(tag)){ **** Błąd w instrukcji? 6.3 Dodawanie nowych tagów do obiektu
       if(!Object.prototype.hasOwnProperty.call(allTags, tag)){
 
         /* [NEW] add tag to allTags object */
@@ -225,7 +226,6 @@ function generateTags() {
 
   /* [NEW] find list of tags in right column */
 
-  //const tagList = document.querySelector('.tags');
   const tagList = document.querySelector(optTagsListSelector);
     
   /* [NEW] TAG CLOUD */
@@ -351,6 +351,10 @@ addClickListenersToTags();
 
 function generateAuthors() {
 
+  /* [NEW] create a new variable allAuthors with an empty array */
+
+  let allAuthors = {};
+
   /* [DONE] find all articles */
 
   const articles = document.querySelectorAll(optArticleSelector);
@@ -361,17 +365,76 @@ function generateAuthors() {
 
     /* [DONE] find author wrapper */
 
-    const title = article.querySelector(optTitleSelector);
+    const authors = article.querySelector(optArticleAuthorsSelector);
+
+    /* [DONE] make html variable with empty string */
+
+    let html = '';
 
     /* [DONE] get author from data-author attribute */
 
-    const articleAuthor = article.getAttribute('data-author');
-    console.log('"data-author" attribute get from the article: ' + articleAuthor);
+    const author = article.getAttribute('data-author');
+    console.log('"data-author" attribute get from the article: ' + author);
 
-    title.insertAdjacentHTML('afterend', '<div class="post-author"><a href="#author-' + articleAuthor + '">' + articleAuthor + '</a></div>');
+    /* [DONE] generate HTML of the link */
+
+    const linkHTML = '<li><a href="#author-' + author + '">' + author + '</a></li>';
+    console.log('Generated author HTML code: ' + linkHTML);
+
+    /* [DONE] add generated code to html variable */
+
+    html = html + linkHTML;  
+      
+    /* [NEW] check if this link is NOT already in allAuthors */
+
+    if(!Object.prototype.hasOwnProperty.call(allAuthors, author)){
+
+      /* [NEW] add author to allAuthors object */
+
+      allAuthors[author] = 1;
+    } else {
+      allAuthors[author]++;
+    }
+
+    /* [DONE] insert HTML of all the links into the tags wrapper */
+
+    console.log('TEST' + html);
+    authors.innerHTML = html;
+    
+
+    //title.insertAdjacentHTML('afterbegin', '<li><a href="#author-' + author + '">' + author + '</a></li>');
 
   /* [DONE] END LOOP: for every article: */
   }
+
+  /* [NEW] find list of authors in right column */
+
+  const authorList = document.querySelector(optAuthorsListSelector);
+    
+  /* [NEW] AUTHOR CLOUD */
+  
+  const authorsParams = calculateTagsParams(allAuthors);
+  console.log('"authorsParams": ', authorsParams);
+  
+  /* [NEW] create variable for all links HTML code */
+  
+  let allAuthorsHTML = '';
+  
+  /* [NEW] START LOOP: for each tag in allAuthors: */
+  
+  for(let author in allAuthors){
+      
+    /* [NEW] generate code of a link and add it to allAuthorsHTML */
+  
+    allAuthorsHTML += '<li><a class="' + calculateTagClass(allAuthors[author], authorsParams) + '" href="#author-' + author + '">' + author + '</a></li>';
+  
+    /* [NEW] END LOOP: for each tag in allAuthors */
+  }
+  
+  /* [NEW] add html from allAuthorsHTML to uthorList */
+  
+  authorList.innerHTML = allAuthorsHTML;
+  //console.log(allAuthors  );
 }
 
 generateAuthors();
