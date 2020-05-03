@@ -117,10 +117,6 @@ a {
 }
 
 /* Sidebar */
-ul[class="list tags"] {
-  display: inline;
-}
-
 .tag-size-1 {
   font-size: 15px;
   color: red;
