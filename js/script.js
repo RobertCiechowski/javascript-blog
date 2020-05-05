@@ -4,12 +4,11 @@ const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags .list',
-  optArticleAuthorsSelector = 'post-author .list',
+  optArticleAuthorsSelector = '.post-author',
   optTagsListSelector = '.tags.list',
   optCloudClassCount = '5',
   optCloudClassPrefix = 'tag-size-',
   optAuthorsListSelector = '.authors.list';
-
 
 // ***              ***
 // TITLE CLICK HANDLER
